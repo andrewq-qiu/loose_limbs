@@ -42,7 +42,7 @@ class Body:
             d_y = self.points[segment[0]].pos[1] - self.points[segment[1]].pos[1]
 
             self.baseDisplacement.append([abs(d_x), abs(d_y)])
-            self.baseSegmentLength.append(d_x*d_x + d_y*d_y)
+            self.baseSegmentLength.append(math.sqrt(d_x*d_x + d_y*d_y))
         self.spring_constant = spring_constant
         self.color = color
         self.damp = damp
@@ -68,7 +68,7 @@ ball = Body(1280/2, 720/2,
                         [-1, 2 + 2*octo_y], [-1 - octo_y, 2 + octo_y], [-1 - octo_y, octo_y]]),
             [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 0]],
             40,
-            0.0001,
+            0.001,
             (0, 0, 0),
             0.85,
             1
@@ -98,31 +98,7 @@ def calculate_physics():
             pos[0] += vel[0]
             pos[1] += vel[1]
 
-            # Calculate Force:
-            point.force = [0, body.mass * g]
             force = point.force
-
-            # NOTE FOR FUTURE CHANGE: ITERATE BY SEGMENTS AND NOT POINTS AFTER  !!!!
-
-            # Spring Forces
-            r_s = body.relevantSegment[i]
-            for segment in r_s:
-                o_length = body.baseSegmentLength[segment]
-                p1 = body.points[body.segments[segment][0]].pos
-                p2 = body.points[body.segments[segment][1]].pos
-
-                d_x = abs(p1[0] - p2[0])
-                d_y = abs(p1[1] - p2[1])
-
-                o_x = body.baseDisplacement[segment][0]
-                o_y = body.baseDisplacement[segment][1]
-
-                f_x = (d_x - o_x) * body.spring_constant
-                f_y = (d_y - o_y) * body.spring_constant
-
-                force[0] += f_x
-                force[1] += f_y
-                print(force)
 
             # Update Velocity based on Force of each
             acc = [force[0] / body.mass, force[1] / body.mass]
@@ -131,6 +107,34 @@ def calculate_physics():
 
             # Damping Effect on Velocity
             body.vel = [vel[0] * body.damp, vel[1] * body.damp]
+
+            point.force = [0, body.mass*g]
+
+    # for each segment
+        for i in range(len(body.segments)):
+            segment = body.segments[i]
+            p1 = body.points[segment[0]]
+            p2 = body.points[segment[1]]
+
+            d_x = p1.pos[0] - p2.pos[0]
+            d_y = p1.pos[1] - p2.pos[1]
+
+            d_vx = p1.vel[0] - p2.vel[0]
+            d_vy = p1.vel[1] - p2.vel[1]
+
+            o_length = body.baseSegmentLength[i]
+            n_length = math.sqrt(d_x * d_x + d_y * d_y)
+
+            f = (o_length - n_length) * body.spring_constant #+ (d_x * d_y + d_vx * d_vy) * (10 / n_length)
+
+            fx = f * (d_x/n_length)
+            fy = f * (d_y/n_length)
+
+            p1.force[0] += fx
+            p1.force[1] += fy
+            p2.force[0] -= fx
+            p2.force[1] -= fy
+
 
 
 while True:
