@@ -1,32 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/physics.py" line="115" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="812bcaa0-15b5-4f33-a600-1308a61ee8ff" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/physics.py" beforeDir="false" afterPath="$PROJECT_DIR$/physics.py" afterDir="false" />
-    </list>
+    <list default="true" id="a420febb-f846-4627-bd33-8684e92c6936" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/engine.py">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="153">
+                    <caret line="87" column="13" selection-start-line="87" selection-start-column="13" selection-end-line="87" selection-end-column="13" />
+                    <folding>
+                      <element signature="e#1953#6312#0" />
+                      <element signature="e#2821#3651#0" />
+                      <element signature="e#3688#4498#0" />
+                      <element signature="e#4535#5374#0" />
+                      <element signature="e#6088#6218#0" />
+                    </folding>
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tokenize.py">
+        <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7446">
-              <caret line="446" selection-start-line="446" selection-end-line="446" />
+            <state relative-caret-position="544">
+              <caret line="32" column="18" lean-forward="true" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/maps.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-836">
+              <caret line="154" column="35" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
+              <folding>
+                <element signature="e#70#2241#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/physics.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="44" column="51" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
+            <state relative-caret-position="813">
+              <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/globals.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="833">
+              <caret line="49" column="56" lean-forward="true" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,44 +93,77 @@
       </list>
     </option>
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>dC</find>
+      <find>rendermap</find>
+      <find>renderMap</find>
+      <find>render</find>
+      <find>space.add</find>
+      <find>screen =</find>
+      <find>deb</find>
+      <find>distort</find>
+      <find>distort_poi</find>
+      <find>render_map</find>
+      <find>class block</find>
+      <find>set_map</find>
+      <find>draw</find>
+      <find>draw_block_set</find>
+      <find>class player</find>
+      <find>space.ad</find>
+    </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/csv_read.py" />
+        <option value="$PROJECT_DIR$/map.py" />
+        <option value="$PROJECT_DIR$/venv/keys.py" />
+        <option value="$PROJECT_DIR$/key.py" />
+        <option value="$PROJECT_DIR$/stick.py" />
+        <option value="$PROJECT_DIR$/keys.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/engine.py" />
+        <option value="$PROJECT_DIR$/globals.py" />
         <option value="$PROJECT_DIR$/physics.py" />
+        <option value="$PROJECT_DIR$/maps.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="60" />
-    <option name="y" value="180" />
-    <option name="width" value="1575" />
-    <option name="height" value="837" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-114" />
+    <option name="y" value="-12" />
+    <option name="width" value="861" />
+    <option name="height" value="945" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="ssmash" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ssmash" type="462c0819:PsiDirectoryNode" />
+              <item name="sticksmash" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sticksmash" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sticksmash" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sticksmash" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sticksmash - Copy" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -91,9 +177,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
-    <configuration name="physics" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="ssmash" />
+  <component name="RunManager" selected="Python.main">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sticksmash" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -104,7 +190,28 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/physics.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="map" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="sticksmash" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/map.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -115,7 +222,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.physics" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.map" />
       </list>
     </recent_temporary>
   </component>
@@ -124,33 +232,25 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="812bcaa0-15b5-4f33-a600-1308a61ee8ff" name="Default Changelist" comment="" />
-      <created>1553016610484</created>
+      <changelist id="a420febb-f846-4627-bd33-8684e92c6936" name="Default Changelist" comment="" />
+      <created>1551831260828</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1553016610484</updated>
+      <updated>1551831260828</updated>
     </task>
-    <task id="LOCAL-00001" summary="basic physics engine is almost ready, with some bugs on forces that have known solutions and will be pushed in the next update =&gt; after this, the 2d physics engine can be ported onto the 3d, with changed points from stick figures instead of octagons">
-      <created>1553025349582</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1553025349582</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="48" y="144" width="1260" height="669" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24938676" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.16280295" />
+      <window_info id="Structure" order="1" sideWeight="0.5016129" side_tool="true" weight="0.24920969" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.31098697" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3996063" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -158,18 +258,18 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24938676" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4983871" visible="true" weight="0.24920969" />
+      <window_info id="Structure" order="1" sideWeight="0.5016129" side_tool="true" weight="0.24920969" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32874015" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3996063" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3997833" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -177,27 +277,74 @@
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
   </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="basic physics engine is almost ready, with some bugs on forces that have known solutions and will be pushed in the next update =&gt; after this, the 2d physics engine can be ported onto the 3d, with changed points from stick figures instead of octagons" />
-    <option name="LAST_COMMIT_MESSAGE" value="basic physics engine is almost ready, with some bugs on forces that have known solutions and will be pushed in the next update =&gt; after this, the 2d physics engine can be ported onto the 3d, with changed points from stick figures instead of octagons" />
-  </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python37-32/Lib/tokenize.py">
+    <entry file="file://$PROJECT_DIR$/csv_read.py" />
+    <entry file="file://$PROJECT_DIR$/venv/keys.py" />
+    <entry file="file://$PROJECT_DIR$/key.py" />
+    <entry file="file://$PROJECT_DIR$/stick.py" />
+    <entry file="file://$PROJECT_DIR$/map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7446">
-          <caret line="446" selection-start-line="446" selection-end-line="446" />
+        <state relative-caret-position="34">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/keys.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="544">
+          <caret line="32" column="18" lean-forward="true" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/globals.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="49" column="56" lean-forward="true" selection-start-line="49" selection-start-column="56" selection-end-line="49" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/engine.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="87" column="13" selection-start-line="87" selection-start-column="13" selection-end-line="87" selection-end-column="13" />
+          <folding>
+            <element signature="e#1953#6312#0" />
+            <element signature="e#2821#3651#0" />
+            <element signature="e#3688#4498#0" />
+            <element signature="e#4535#5374#0" />
+            <element signature="e#6088#6218#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/physics.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="44" column="51" selection-start-line="44" selection-start-column="51" selection-end-line="44" selection-end-column="51" />
+        <state relative-caret-position="813">
+          <caret line="118" column="20" lean-forward="true" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/maps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-836">
+          <caret line="154" column="35" selection-start-line="154" selection-start-column="35" selection-end-line="154" selection-end-column="35" />
+          <folding>
+            <element signature="e#70#2241#0" />
+          </folding>
         </state>
       </provider>
     </entry>
