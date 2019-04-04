@@ -70,7 +70,35 @@ class SSDepth:
 
 
 class SSBase:
+    def startup(self):
+        if self.startup_tick > 0:
+            self.startup_tick += 1
+            # print(self.startup_tick)
+            if self.startup_tick % self.spawn_time == 0:
+                m = round(self.startup_tick / self.spawn_time)
+                if m == globals.PLAYER_INIT_NUM - 1:
+                    self.startup_tick = 0
+                    # globals.space.gravity = 0, 400
+                    globals.TICK = 1 / globals.FPS
+
+                engine.add_player()
+
+                # Update Player
+                player = globals.PLAYERS[m]
+                player.pos = self.spawn_locations[m]
+
+                player.sf = \
+                    physics.StickFigure(player.pos[0], player.pos[1], player.sf.color, player.player_num)
+
     def init_function(self):
+        # globals.space.gravity = 0, 0
+        globals.TICK = 0
+        # STOP TIME
+        globals.MODE = '3D'
+        self.startup_tick = 1
+        engine.clear_players()
+        engine.add_player()
+
         # Symmetrical
         self.symmetry_vertices = [
             [0, 2.7],
@@ -92,7 +120,7 @@ class SSBase:
 
         reflection = reflection[::-1]
         self.base_vertices = reflection + self.symmetry_vertices
-        print('base_vertices', self.base_vertices)
+        # print('base_vertices', self.base_vertices)
 
         # Create Depth Object
         self.depth_object = engine.DepthObject(self.base_vertices, 2, (-1, -1, -1), (0, 0, 0), 3)
@@ -102,13 +130,13 @@ class SSBase:
         self.physics_vertices = list()
         for i in range(len(self.base_vertices)):
             self.physics_vertices.append([self.base_vertices[i][0] * 100, self.base_vertices[i][1] * 100])
-        print(self.physics_vertices)
+        # print(self.physics_vertices)
 
         # Static Body
         self.body = pymunk.Body(0, 0, pymunk.Body.STATIC)
         self.body.position = 0, 0
         self.poly = pymunk.Poly(self.body, self.physics_vertices, None, 0)
-        # self.poly.friction = 2.0
+        self.poly.friction = globals.MAP_FRICTION
 
         globals.space.add(self.body, self.poly)
 
@@ -134,14 +162,11 @@ class SSBase:
             1200,  # MAX Y
         ]
 
-        for i in range(len(globals.PLAYERS)):
-            x = self.spawn_locations[i][0]
-            y = self.spawn_locations[i][1]
+        player = globals.PLAYERS[len(globals.PLAYERS) - 1]
+        player.pos = self.spawn_locations[len(globals.PLAYERS) - 1]
 
-            globals.PLAYERS[i].pos = (x, y)
-
-            globals.PLAYERS[i].sf = \
-                physics.StickFigure(x, y, globals.PLAYERS[i].sf.color, globals.PLAYERS[i].player_num)
+        player.sf = \
+            physics.StickFigure(player.pos[0], player.pos[1], player.sf.color, player.player_num)
 
     def __init__(self):
         self.body = None
@@ -149,6 +174,8 @@ class SSBase:
         self.objects = list()
         self.spawn_locations = list()
         self.platform = None
+        self.startup_tick = 0
+        self.spawn_time = 10
         self.elimination_bounds = list()
 
         self.physics_vertices = list()
@@ -168,9 +195,10 @@ class SSBase:
             print('PLAYER ' + str(player.lives) + ' HAS LOST ALL LIVES')
 
     def runtime_function(self):
-        engine.screen.fill((255, 255, 255))
+        # engine.screen.fill((255, 255, 255))
         self.depth_object.draw()
         self.platform.draw()
+        self.startup()
 
         # Adjust Camera To Match Average of Stick Figures
         sum_x = 0

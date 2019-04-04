@@ -34,6 +34,7 @@ class StickFigure:
         self.color = color
         self.scale = globals.SEGMENT_SCALE
         self.player_num = player_num
+        # self.item = None
 
         self.segments = copy.deepcopy(globals.SEGMENTS)
 
@@ -51,6 +52,7 @@ class StickFigure:
             # seg.body.velocity_limit = 10
 
             seg.poly = pymunk.Poly.create_box(seg.body, (seg.length, seg.width), 1)
+            seg.poly.friction = globals.PLAYER_FRICTION
 
         """
             |----|
@@ -231,6 +233,7 @@ class StickFigure:
             self.rotary_limits.append(r)
 
         """
+
 
 """
 def static_borders():

@@ -1,4 +1,4 @@
-import math, map, globals, pymunk, physics, pygame
+import math, map, globals, pymunk, physics, pygame, copy
 
 screen = None
 stickFigures = []
@@ -74,6 +74,7 @@ class Platform:
         self.body.position = x, y
 
         self.poly = pymunk.Poly.create_box(self.body, (length, width), 0)
+        self.poly.friction = globals.MAP_FRICTION
         globals.space.add(self.body, self.poly)
 
         self.depth = depth
@@ -102,8 +103,11 @@ class Player:
         scale_factor = globals.FLAME_SCALE
         xy2 = (xy1[0] + force_x * scale_factor, xy1[1] + force_y * scale_factor)
 
-        xy1 = distort_point(xy1[0], xy1[1], 0)
-        xy2 = distort_point(xy2[0], xy2[1], 0)
+        if globals.MODE == '3D':
+            xy1 = distort_point(xy1[0], xy1[1], 0)
+            xy2 = distort_point(xy2[0], xy2[1], 0)
+
+        print(xy1, xy2)
 
         pygame.draw.line(screen, globals.BOOSTER_COLOR, xy1, xy2, 5)
 
@@ -124,8 +128,9 @@ class Player:
         scale_factor = globals.FLAME_SCALE
         xy2 = (xy1[0] - force_x * scale_factor, xy1[1] - force_y * scale_factor)
 
-        xy1 = distort_point(xy1[0], xy1[1], 0)
-        xy2 = distort_point(xy2[0], xy2[1], 0)
+        if globals.MODE == '3D':
+            xy1 = distort_point(xy1[0], xy1[1], 0)
+            xy2 = distort_point(xy2[0], xy2[1], 0)
 
         pygame.draw.line(screen, globals.BOOSTER_COLOR, xy1, xy2, 5)
 
@@ -145,8 +150,9 @@ class Player:
         scale_factor = globals.FLAME_SCALE
         xy2 = (xy1[0] + force_x * scale_factor, xy1[1] + force_y * scale_factor)
 
-        xy1 = distort_point(xy1[0], xy1[1], 0)
-        xy2 = distort_point(xy2[0], xy2[1], 0)
+        if globals.MODE == '3D':
+            xy1 = distort_point(xy1[0], xy1[1], 0)
+            xy2 = distort_point(xy2[0], xy2[1], 0)
 
         pygame.draw.line(screen, globals.BOOSTER_COLOR, xy1, xy2, 5)
 
@@ -167,8 +173,9 @@ class Player:
         scale_factor = globals.FLAME_SCALE
         xy2 = (xy1[0] - force_x * scale_factor, xy1[1] - force_y * scale_factor)
 
-        xy1 = distort_point(xy1[0], xy1[1], 0)
-        xy2 = distort_point(xy2[0], xy2[1], 0)
+        if globals.MODE == '3D':
+            xy1 = distort_point(xy1[0], xy1[1], 0)
+            xy2 = distort_point(xy2[0], xy2[1], 0)
 
         pygame.draw.line(screen, globals.BOOSTER_COLOR, xy1, xy2, 5)
 
@@ -182,6 +189,7 @@ class Player:
         self.pos = pos
         self.color = color
         self.player_num = len(globals.PLAYERS)
+        self.item = []
 
         # Pre-Render Text
         self.pre_rendered_text = globals.FONTS['HUD_FONT'].render(
@@ -213,7 +221,8 @@ class Player:
         # Associate Keys
         # print(self.keys[key])
         # print(self.movement_functions)
-        self.movement_functions[self.keys[key]]()
+        if not (len(self.item) != 0 and (self.keys[key] == 'L_ARM_BOOSTER' or self.keys[key] == 'R_ARM_BOOSTER')):
+            self.movement_functions[self.keys[key]]()
 
 
 TEMPLATE_PLAYERS = [
@@ -223,29 +232,59 @@ TEMPLATE_PLAYERS = [
                 pygame.K_w: 'R_ARM_BOOSTER',
                 pygame.K_a: 'L_LEG_BOOSTER',
                 pygame.K_s: 'R_LEG_BOOSTER'
-           }, (-1, -1)),
+           }, (200, 200)),
     Player((33, 240, 255),
            {
                 pygame.K_t: 'L_ARM_BOOSTER',
                 pygame.K_y: 'R_ARM_BOOSTER',
                 pygame.K_g: 'L_LEG_BOOSTER',
                 pygame.K_h: 'R_LEG_BOOSTER'
-           }, (-1, -1)),
+           }, (300, 100)),
     Player((252, 255, 89),
            {
                 pygame.K_p: 'L_ARM_BOOSTER',
                 pygame.K_LEFTBRACKET: 'R_ARM_BOOSTER',
                 pygame.K_SEMICOLON: 'L_LEG_BOOSTER',
                 pygame.K_QUOTE: 'R_LEG_BOOSTER'
-           }, (-1, -1)),
+           }, (600, 300)),
     Player((210, 89, 255),
            {
                 pygame.K_KP8: 'L_ARM_BOOSTER',
                 pygame.K_KP9: 'R_ARM_BOOSTER',
                 pygame.K_KP5: 'L_LEG_BOOSTER',
                 pygame.K_KP6: 'R_LEG_BOOSTER'
-           }, (-1, -1))
+           }, (800, 400))
 ]
+
+
+def add_player():
+    globals.PLAYERS.append(TEMPLATE_PLAYERS[len(globals.PLAYERS)])
+    # globals.PLAYER_KEY_ASSOCIATION = dict()
+
+    player = globals.PLAYERS[len(globals.PLAYERS) - 1]
+    player.player_num = len(globals.PLAYERS) - 1
+
+    player.sf = physics.StickFigure(player.pos[0], player.pos[1], player.color, player.player_num)
+    for key in player.keys:
+        globals.PLAYER_KEY_ASSOCIATION[key] = player.player_num
+
+
+def remove_player():
+    player = globals.PLAYERS[len(globals.PLAYERS) - 1]
+
+    temp_keys = copy.deepcopy(player.keys)
+    for key in temp_keys:
+        globals.PLAYER_KEY_ASSOCIATION.pop(key, None)
+
+    player.sf.remove_self_from_space()
+    globals.PLAYERS.pop()
+
+
+def clear_players():
+    # Clear Space:
+    physics.space.remove(physics.space.bodies, physics.space.shapes)
+    globals.PLAYER_KEY_ASSOCIATION = dict()
+    globals.PLAYERS = list()
 
 
 def activate_players(n):
@@ -253,7 +292,7 @@ def activate_players(n):
     # Clear Space:
     physics.space.remove(physics.space.bodies, physics.space.shapes)
     globals.PLAYER_KEY_ASSOCIATION = dict()
-    globals.PLAYERS = dict()
+    globals.PLAYERS = list()
 
     # Activate N Players
     globals.PLAYERS = TEMPLATE_PLAYERS[:n]
@@ -453,6 +492,27 @@ def draw_poly(poly, body, outline_color, fill_color, outline_width):
     pygame.draw.polygon(screen, outline_color, vertices, outline_width)
 
 
+def draw_poly_raw(poly, body, outline_color, fill_color, outline_width):
+    vertices = poly.get_vertices()
+
+    vertices = global_vertices(vertices, body)
+    pygame.draw.polygon(screen, fill_color, vertices, 0)
+    pygame.draw.polygon(screen, outline_color, vertices, outline_width)
+
+
+def draw_stick_figure_raw(sf):
+    for key in sf.segments:
+        segment = sf.segments[key]
+        if key != 'HEAD' and key != 'NECK':
+            draw_poly_raw(segment.poly, segment.body, globals.COLORS['BLACK'], sf.color, 4)
+
+    head = sf.segments['HEAD']
+    h_pos = head.body.position
+
+    pygame.draw.circle(screen, sf.color, [round(h_pos[0]), round(h_pos[1])], 15, 0)
+    pygame.draw.circle(screen, globals.COLORS['BLACK'], [round(h_pos[0]), round(h_pos[1])], 15, 4)
+
+
 def draw_stick_figure(sf):
     for key in sf.segments:
         segment = sf.segments[key]
@@ -464,6 +524,22 @@ def draw_stick_figure(sf):
 
     pygame.draw.circle(screen, sf.color, [round(h_pos[0]), round(h_pos[1])], 10, 0)
     pygame.draw.circle(screen, globals.COLORS['BLACK'], [round(h_pos[0]), round(h_pos[1])], 10, 4)
+
+
+class RocketLauncher:
+    def draw(self):
+        draw_poly(self.poly, self.body, globals.COLORS['BLACK'], (56, 56, 56), 2)
+
+    def __init__(self, x, y):
+        width, height = 150, 30
+        # Main Body
+        self.body = pymunk.Body(globals.ROCKET_LAUNCHER_MASS, pymunk.moment_for_box(globals.ROCKET_LAUNCHER_MASS,
+                                (width, height)))
+        self.body.position = x, y
+        self.poly = pymunk.Poly.create_box(self.body, (width, height), 0)
+
+        globals.space.add(self.body, self.poly)
+        globals.ACTIVE_ITEMS.append(self)
 
 
 def set_map(m=defaultMap):
@@ -485,7 +561,7 @@ def set_map(m=defaultMap):
     render_map.body = list()
     render_map.poly = list()
 
-    print(d)
+    # print(d)
 
     for a in range(len(d)):
         for b in range(len(d[a])):

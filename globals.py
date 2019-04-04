@@ -85,7 +85,15 @@ COLORS = {
 }
 
 ASSETS = {
-    'STICK_FIGURE_IMG': pygame.image.load('assets/stick_figure.png')
+    'STICK_FIGURE_IMG': pygame.image.load('assets/stick_figure.png'),
+    'LOOSE_LIMBS': pygame.transform.scale(pygame.image.load('assets/loose_limbs.png'), (400, 400)),
+    'GO': pygame.image.load('assets/go.png'),
+    'ARROW': pygame.image.load('assets/arrow.png'),
+    'player_count_box': pygame.image.load('assets/player_count_box.png'),
+    '1': pygame.image.load('assets/1.png'),
+    '2': pygame.image.load('assets/2.png'),
+    '3': pygame.image.load('assets/3.png'),
+    '4': pygame.image.load('assets/4.png')
 }
 
 FONTS = {
@@ -93,5 +101,19 @@ FONTS = {
 }
 
 PLAYERS = list()
+PLAYER_INIT_NUM = 2
 # Description: key -> given a pygame keyState Object -> return a player key association
 PLAYER_KEY_ASSOCIATION = dict()
+ROCKET_LAUNCHER_MASS = 15
+MAP_FRICTION = 0.1
+PLAYER_FRICTION = 0.1
+COLLISION_MOUSE = 1
+IS_MOUSE_DOWN = False
+
+ACTIVE_ITEMS = list()
+PHASE = ''
+MODE = '2D'
+
+print('globals.py Completed Loading')
+TITLE_SCREEN = None
+GAME_INIT_SCREEN = None
