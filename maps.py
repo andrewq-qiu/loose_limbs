@@ -1,4 +1,9 @@
-import engine, pymunk, globals, physics
+import engine, pymunk, globals, physics, pygame, items, random
+
+pygame.mixer.pre_init(22050, -16, 2, 512)
+pygame.init()
+pygame.font.init()
+
 
 # MAPS:
 
@@ -76,11 +81,7 @@ class SSBase:
             # print(self.startup_tick)
             if self.startup_tick % self.spawn_time == 0:
                 m = round(self.startup_tick / self.spawn_time)
-                if m == globals.PLAYER_INIT_NUM - 1:
-                    self.startup_tick = 0
-                    # globals.space.gravity = 0, 400
-                    globals.TICK = 1 / globals.FPS
-
+                globals.SOUNDS['POP1'].play()
                 engine.add_player()
 
                 # Update Player
@@ -89,6 +90,16 @@ class SSBase:
 
                 player.sf = \
                     physics.StickFigure(player.pos[0], player.pos[1], player.sf.color, player.player_num)
+
+                if m == globals.PLAYER_INIT_NUM - 1:
+                    self.startup_tick = 0
+                    # globals.space.gravity = 0, 400
+                    globals.TICK = 1 / globals.FPS
+                    pygame.mixer.music.load('sounds/main_theme.mp3')
+                    pygame.mixer.music.play(loops=20)
+
+                    # rl = items.PlayerSwitcher(-100, -700)
+                    # rl.append_to_sf(player.sf)
 
     def init_function(self):
         # globals.space.gravity = 0, 0
@@ -140,7 +151,7 @@ class SSBase:
 
         globals.space.add(self.body, self.poly)
 
-        # Adjust Camera
+        # Adjust Cameraw
         y_position = 0
         engine.back_cam.y = y_position * 1
         engine.cam.y = y_position * 100 - 2 * 100
@@ -177,28 +188,64 @@ class SSBase:
         self.startup_tick = 0
         self.spawn_time = 10
         self.elimination_bounds = list()
+        self.eliminated_count = 0
 
         self.physics_vertices = list()
         self.base_vertices = list()
         self.symmetry_vertices = list()
         self.depth_object = None
+        self.tick = 0
+        self.weapon_drop_time = globals.WEAPON_DROP_TIME
 
         self.init_function()
 
-    @staticmethod
-    def reset_player(player):
+    def reset_player(self, player):
         player.lives -= 1
         player.sf.remove_self_from_space()
+
         if player.lives > 0:
             player.sf = physics.StickFigure(player.pos[0], player.pos[1], player.color, player.player_num)
         else:
             print('PLAYER ' + str(player.lives) + ' HAS LOST ALL LIVES')
+            self.eliminated_count += 1
+            globals.SOUNDS['ELIMINATION'].play()
+
+    def eliminated(self, player):
+        self.reset_player(player)
+        # print(self.eliminated_count)
+        globals.SOUNDS['LOST_LIFE'].play()
+        if self.eliminated_count == globals.PLAYER_INIT_NUM - 1:
+
+            last_player = None
+
+            for p in globals.PLAYERS:
+                if p.lives > 0:
+                    last_player = p.player_num
+                    break
+
+            print('PLAYER ' + str(last_player) + ' IS THE LAST PLAYER ALIVE')
+
+            globals.TICK = 0
+            globals.PHASE_EXTRA = 'finish'
+            pygame.mixer.music.load(globals.SOUNDS['GAME'])
+            pygame.mixer.music.play()
+
+            globals.LAST_PLAYER = last_player
+
+    def random_weapons(self):
+        self.tick += 1
+        if self.tick % self.weapon_drop_time == 0:
+            selected_weapon = random.randint(0, len(globals.AVAILABLE_ITEMS) - 1)
+
+            weapon = globals.AVAILABLE_ITEMS[selected_weapon](0, -500)
 
     def runtime_function(self):
         # engine.screen.fill((255, 255, 255))
+        # print('i am here')
         self.depth_object.draw()
         self.platform.draw()
         self.startup()
+        self.random_weapons()
 
         # Adjust Camera To Match Average of Stick Figures
         sum_x = 0
@@ -230,19 +277,19 @@ class SSBase:
                 # Eliminated ?
                 if p[0] < self.elimination_bounds[0]:
                     print('PLAYER ' + str(player.player_num) + ' ELIMINATED LEFT BOUND')
-                    self.reset_player(player)
+                    self.eliminated(player)
 
                 elif p[0] > self.elimination_bounds[1]:
                     print('PLAYER ' + str(player.player_num) + ' ELIMINATED RIGHT BOUND')
-                    self.reset_player(player)
+                    self.eliminated(player)
 
                 elif p[1] < self.elimination_bounds[2]:
                     print('PLAYER ' + str(player.player_num) + ' ELIMINATED UP BOUND')
-                    self.reset_player(player)
+                    self.eliminated(player)
 
                 elif p[1] > self.elimination_bounds[3]:
                     print('PLAYER ' + str(player.player_num) + ' ELIMINATED DOWN BOUND')
-                    self.reset_player(player)
+                    self.eliminated(player)
 
         # BOUNDS = (min_x, max_x, min_y, max_y)
         padding = 1000

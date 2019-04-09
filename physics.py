@@ -34,6 +34,9 @@ class StickFigure:
         self.color = color
         self.scale = globals.SEGMENT_SCALE
         self.player_num = player_num
+        self.active_item = None
+        self.active_item_type = ''
+
         # self.item = None
 
         self.segments = copy.deepcopy(globals.SEGMENTS)
@@ -112,10 +115,10 @@ class StickFigure:
             seg = self.segments[key]
 
             # No Collision Between Limbs
-            category = player_num + 1
+            category = globals.COLLISION_TYPE['PLAYERS'][player_num]
 
-            seg.poly.filter = \
-                pymunk.ShapeFilter(group=category)
+            seg.poly.filter = pymunk.ShapeFilter(categories=category, mask=pymunk.ShapeFilter.ALL_MASKS ^ category)
+            seg.poly.collision_type = globals.COLLISION_ID['PLAYERS'][player_num]
 
             space.add(seg.body, seg.poly)
         # Add Joints

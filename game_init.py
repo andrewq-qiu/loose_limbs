@@ -6,6 +6,10 @@ button_hash = {
     'go_button': 0x00100000
 }
 
+pygame.mixer.pre_init(22050, -16, 2, 512)
+pygame.init()
+pygame.font.init()
+
 
 class SandBox:
     def draw(self):
@@ -118,6 +122,7 @@ class PlayerCounter:
                     globals.PLAYER_INIT_NUM = self.player_count
                     self.click_time_current = 1
                     engine.remove_player()
+                    globals.SOUNDS['POP'].play()
 
         if hit_right != None:
             if globals.IS_MOUSE_DOWN and self.click_time_current == 0:
@@ -126,6 +131,7 @@ class PlayerCounter:
                     globals.PLAYER_INIT_NUM = self.player_count
                     self.click_time_current = 1
                     engine.add_player()
+                    globals.SOUNDS['POP'].play()
 
         for button in self.buttons:
             button.draw()
@@ -188,20 +194,29 @@ class PlayerCounter:
 
 class StartBox:
     def draw(self, mp, root):
+        mask_num = pymunk.ShapeFilter.ALL_MASKS ^ button_hash['player_count_l'] ^ 0x00000001 \
+                   ^ button_hash['player_count_r']
+
+        for ct in globals.COLLISION_TYPE['PLAYERS']:
+            mask_num = mask_num ^ ct
+
         hit_go = globals.space.point_query_nearest((mp[0], mp[1]), 10,
                                                      pymunk.ShapeFilter(
-                                                         mask=pymunk.ShapeFilter.ALL_MASKS ^
-                                                              button_hash['player_count_l']
-                                                              ^ 0x00000001
-                                                              ^ button_hash['player_count_r']
+                                                         mask=mask_num
                                                      ))
 
-        if hit_go != None:
+        if (not self.last_hit_state) and hit_go != None:
             self.fill_color = (0, 255, 237)
+            globals.SOUNDS['MOUSE_CLICK'].play()
+            self.last_hit_state = True
+        elif self.last_hit_state and hit_go == None:
+            self.fill_color = (244, 66, 66)
+            self.last_hit_state = False
+
+        if hit_go != None:
             if globals.IS_MOUSE_DOWN:
                 root.finish()
-        else:
-            self.fill_color = (244, 66, 66)
+
 
         engine.draw_poly_raw(self.poly, self.body, globals.COLORS['BLACK'], self.fill_color, 4)
         # Top Left V Location
@@ -234,6 +249,7 @@ class StartBox:
         self.poly = pymunk.Poly.create_box(self.body, size, 0)
         self.poly.filter = pymunk.ShapeFilter(categories=button_hash['go_button'])
         self.image_asset = pygame.transform.scale(globals.ASSETS['GO'], size)
+        self.last_hit_state = False
 
         self.fill_color = (244, 66, 66)
 
@@ -248,6 +264,7 @@ class GameInit:
         globals.space.remove(globals.space.bodies, globals.space.shapes)
         # engine.activate_players(globals.PLAYER_INIT_NUM)
         globals.CURRENT_MAP = maps.SSBase()
+        pygame.mixer.music.stop()
 
     def runtime(self):
 
@@ -266,6 +283,10 @@ class GameInit:
         engine.activate_players(2)
         self.sandbox = SandBox()
         self.physics_objects = []
+
+        pygame.mixer.music.load(globals.MUSIC['ELEVATOR'])
+        pygame.mixer.music.play(loops=20)
+
         # Add Buttons
 
         c_x = engine.s_w * (1 / 4)
@@ -273,7 +294,7 @@ class GameInit:
         # Player Count Screen
         self.physics_objects.append(PlayerCounter(c_x, c_y, 50))
         self.physics_objects.append(StartBox((150, 50)))
-        print(globals.space.bodies)
+        # print(globals.space.bodies)
 
 
 

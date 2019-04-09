@@ -1,14 +1,19 @@
 import pymunk
 import pygame
 import pymunk.pygame_util
+import os
 
 # Segment Types & Values
 # Create Segments
 
 space = pymunk.Space()
 pymunk.pygame_util.positive_y_is_up = False
+
+pygame.mixer.pre_init(44100, -16, 1, 512)
+pygame.mixer.init()
 pygame.init()
 pygame.font.init()
+
 
 FPS = 60
 TICK = 1/FPS
@@ -93,8 +98,27 @@ ASSETS = {
     '1': pygame.image.load('assets/1.png'),
     '2': pygame.image.load('assets/2.png'),
     '3': pygame.image.load('assets/3.png'),
-    '4': pygame.image.load('assets/4.png')
+    '4': pygame.image.load('assets/4.png'),
+    'GAME': pygame.image.load('assets/game.png'),
+    'LASER_GUN': pygame.image.load('assets/laser_gun.png')
 }
+
+SOUNDS = {
+    'GAME': 'sounds/game.mp3',
+    'POP': pygame.mixer.Sound('sounds/pop.ogg'),
+    'MOUSE_CLICK': pygame.mixer.Sound('sounds/mouse_click.ogg'),
+    'POP1': pygame.mixer.Sound('sounds/pop1.ogg'),
+    'LOST_LIFE': pygame.mixer.Sound('sounds/lost_life.ogg'),
+    'ELIMINATION': pygame.mixer.Sound('sounds/elimination.ogg'),
+    'BALL': pygame.mixer.Sound('sounds/ball.ogg'),
+    'ROCKET_LAUNCHER': pygame.mixer.Sound('sounds/rocket_launcher.ogg')
+}
+
+MUSIC = {
+    'ELEVATOR': 'sounds/elevator.mp3',
+    'VICTORY': 'sounds/victory.mp3'
+}
+
 
 FONTS = {
     'HUD_FONT': pygame.font.SysFont('Arial', 20)
@@ -112,8 +136,33 @@ IS_MOUSE_DOWN = False
 
 ACTIVE_ITEMS = list()
 PHASE = ''
+PHASE_EXTRA = ''
 MODE = '2D'
 
-print('globals.py Completed Loading')
 TITLE_SCREEN = None
 GAME_INIT_SCREEN = None
+FINISH_SCREEN = None
+LAST_PLAYER = None
+
+PROJECTILES = []
+
+COLLISION_TYPE = {
+    'ITEM': 0x10000000,
+    'PLAYERS': [0x00000010, 0x00000100, 0x00001000, 0x00010000]
+}
+
+ITEMS_COLLISION_ID_INDEX = 5
+
+COLLISION_ID = {
+    'PLAYERS': [1, 2, 3, 4]
+}
+
+ROCKET_LAUNCHER_IMPULSE = 500000
+MANUAL_DRAW_ARRAY = []
+WEAPON_DROP_TIME = 100
+PLAYER_LIVES = 4
+
+CURRENT_TIME = 0
+AVAILABLE_ITEMS = []
+
+print('globals.py Completed Loading')

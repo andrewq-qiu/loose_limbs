@@ -1,8 +1,10 @@
-import pygame, map, engine, sys, physics, globals, math, pymunk, pymunk.pygame_util, maps, title_screen, game_init
+import pygame, map, engine, sys, physics, globals, math, pymunk, pymunk.pygame_util, maps, title_screen, game_init, finish_screen, items
 
 Map = map.Map
 
+pygame.mixer.pre_init(44100, -16, 1, 512)
 pygame.init()
+pygame.font.init()
 
 engine.pygame = pygame
 
@@ -18,20 +20,20 @@ pygame.display.set_caption('Loose Limbs')
 pi = math.pi
 
 clock = pygame.time.Clock()
+globals.AVAILABLE_ITEMS = [items.RocketLauncher, items.HandHeldBallPit]
 # engine.set_map()
 # print(engine.cam.x)
-
-pygame.font.init()
 
 # engine.activate_players(4)
 
 # globals.CURRENT_MAP = maps.SSBase()  # maps.SSDepth()
 engine.back_cam.y -= 2
 
-rocket_launcher = engine.RocketLauncher(100, -800)
 # game_init_object = game_init.GameInit()
 globals.TITLE_SCREEN = title_screen.TitleScreen()
 globals.PHASE = 'title_screen'
+
+globals.FINISH_SCREEN = finish_screen.FinishScreen()
 
 
 def process_keys(key_state):
@@ -45,6 +47,9 @@ def process_keys(key_state):
 while True:
     # FPS LIMIT = 60
     clock.tick(globals.FPS)
+
+    globals.CURRENT_TIME = pygame.time.get_ticks()
+
     globals.space.step(globals.TICK)
     keyState = pygame.key.get_pressed()
     engine.screen.fill((255, 255, 255))
@@ -63,6 +68,7 @@ while True:
     if globals.PHASE == 'title_screen':
         globals.TITLE_SCREEN.runtime()
     elif globals.PHASE == 'game':
+        # print('ere')
         globals.CURRENT_MAP.runtime_function()
 
         # Draw All Active Players
@@ -72,10 +78,18 @@ while True:
         for item in globals.ACTIVE_ITEMS:
             item.draw()
 
+        for projectile in globals.PROJECTILES:
+            projectile.draw()
+
         # Draw HitBox Map
         engine.draw_hud()
     elif globals.PHASE == 'game_init':
         globals.GAME_INIT_SCREEN.runtime()
+
+    if globals.PHASE_EXTRA == 'finish':
+        globals.FINISH_SCREEN.runtime()
+
+    engine.manual_draw()
 
     # Process Keys:
 

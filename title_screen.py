@@ -1,5 +1,9 @@
 import pygame, engine, physics, globals, pymunk, random, copy, math, game_init
 
+pygame.mixer.pre_init(22050, -16, 2, 512)
+pygame.init()
+pygame.font.init()
+
 
 class Circle:
     def draw(self):
@@ -15,7 +19,7 @@ class Circle:
             self.radius = radius
 
         if color == (-1, -1, -1):
-            self.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+            self.color = engine.random_color()
         else:
             self.color = color
 
@@ -34,25 +38,7 @@ class StartBox:
         vertices = self.poly.get_vertices()
         g_vertices = engine.global_vertices(vertices, self.body)
 
-        smallest_x = 9999
-        smallest_y = 9999
-
-        # Most Left (x) Most Up (y)
-        for v in g_vertices:
-            if v[0] < smallest_x:
-                smallest_x = v[0]
-            if v[1] < smallest_y:
-                smallest_y = v[1]
-
-        top_left = (smallest_x, smallest_y)
-
-        angle = -self.body.angle
-
-        # print(angle)
-        new_go = pygame.transform.rotate(globals.ASSETS['GO'], angle*180/math.pi)
-        # new_go = globals.ASSETS['GO']
-
-        engine.screen.blit(new_go, top_left)
+        engine.draw_angled_image(globals.ASSETS['GO'], g_vertices, -self.body.angle)
 
     def __init__(self, size):
         self.body = pymunk.Body(10, pymunk.moment_for_box(10, size))
@@ -84,10 +70,16 @@ class TitleScreen:
         hit = globals.space.point_query_nearest((self.mp[0], self.mp[1]),
                                                 10, pymunk.ShapeFilter
                                                 (categories=198, mask=pymunk.ShapeFilter.ALL_MASKS ^ 199))
-        if hit == None:
-            self.start_box.fill_color = (244, 66, 66)
-        else:
+
+        if (not self.last_hit_state) and hit != None:
             self.start_box.fill_color = (0, 255, 237)
+            globals.SOUNDS['MOUSE_CLICK'].play()
+            self.last_hit_state = True
+        elif self.last_hit_state and hit == None:
+            self.start_box.fill_color = (244, 66, 66)
+            self.last_hit_state = False
+
+        if hit != None:
             if globals.IS_MOUSE_DOWN:
                 self.finish()
 
@@ -120,6 +112,7 @@ class TitleScreen:
 
         self.bound_body = []
         self.bound_poly = []
+        self.last_hit_state = False
 
         for bound in bounds:
             body = pymunk.Body(0, 0, pymunk.Body.STATIC)

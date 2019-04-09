@@ -1,4 +1,4 @@
-import math, map, globals, pymunk, physics, pygame, copy
+import math, map, globals, pymunk, physics, pygame, copy, random
 
 screen = None
 stickFigures = []
@@ -205,7 +205,7 @@ class Player:
             }
         """
 
-        self.lives = 4
+        self.lives = globals.PLAYER_LIVES
         # globals.PLAYERS.append(self)
         self.sf = physics.StickFigure(pos[0], pos[1], color, self.player_num)
 
@@ -221,8 +221,11 @@ class Player:
         # Associate Keys
         # print(self.keys[key])
         # print(self.movement_functions)
-        if not (len(self.item) != 0 and (self.keys[key] == 'L_ARM_BOOSTER' or self.keys[key] == 'R_ARM_BOOSTER')):
+
+        if not (self.sf.active_item_type != '' and (self.keys[key] == 'R_ARM_BOOSTER')):
             self.movement_functions[self.keys[key]]()
+        else:
+            self.sf.active_item.fire()
 
 
 TEMPLATE_PLAYERS = [
@@ -255,6 +258,19 @@ TEMPLATE_PLAYERS = [
                 pygame.K_KP6: 'R_LEG_BOOSTER'
            }, (800, 400))
 ]
+
+
+def reset_template_players():
+    default_coordinates = [
+        (200, 200),
+        (300, 100),
+        (600, 300),
+        (800, 400)
+    ]
+
+    for i in range(len(TEMPLATE_PLAYERS)):
+        player = TEMPLATE_PLAYERS[i]
+        player.pos = copy.deepcopy(default_coordinates[i])
 
 
 def add_player():
@@ -526,22 +542,6 @@ def draw_stick_figure(sf):
     pygame.draw.circle(screen, globals.COLORS['BLACK'], [round(h_pos[0]), round(h_pos[1])], 10, 4)
 
 
-class RocketLauncher:
-    def draw(self):
-        draw_poly(self.poly, self.body, globals.COLORS['BLACK'], (56, 56, 56), 2)
-
-    def __init__(self, x, y):
-        width, height = 150, 30
-        # Main Body
-        self.body = pymunk.Body(globals.ROCKET_LAUNCHER_MASS, pymunk.moment_for_box(globals.ROCKET_LAUNCHER_MASS,
-                                (width, height)))
-        self.body.position = x, y
-        self.poly = pymunk.Poly.create_box(self.body, (width, height), 0)
-
-        globals.space.add(self.body, self.poly)
-        globals.ACTIVE_ITEMS.append(self)
-
-
 def set_map(m=defaultMap):
     global render_map
 
@@ -612,3 +612,38 @@ def draw_hud():
         pygame.draw.circle(screen, (0, 0, 0), (start_x + 50, s_h - 50), 30, 3)
 
 
+def random_color():
+    return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+
+
+def draw_angled_image(image, vertices, angle):
+    n_image = pygame.transform.rotate(image, angle*180/math.pi)
+
+    smallest_x = 9999
+    smallest_y = 9999
+
+    for v in vertices:
+        if v[0] < smallest_x:
+            smallest_x = v[0]
+        if v[1] < smallest_y:
+            smallest_y = v[1]
+
+    top_left = (smallest_x, smallest_y)
+
+    screen.blit(n_image, top_left)
+
+
+class ManualDrawObject:
+    def __init__(self, func, time):
+        self.func = func
+        self.time = time
+        self.start_tick = globals.CURRENT_TIME
+
+        globals.MANUAL_DRAW_ARRAY.append(self)
+
+
+def manual_draw():
+    for draw in globals.MANUAL_DRAW_ARRAY:
+        draw.func()
+        if draw.time + draw.start_tick <= globals.CURRENT_TIME:
+            globals.MANUAL_DRAW_ARRAY.remove(draw)
